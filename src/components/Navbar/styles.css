@@ -1,0 +1,27 @@
+.nav-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    padding: 24px 12px;
+    margin: 0;
+
+    width: 64px;
+    height: 100vh;
+
+    background-color: var(--primary-color-dark);
+
+    z-index: 5;
+}
+
+.nav-wrapper .styled-link {
+    color: var(--secondary-color);
+}
+
+.nav-wrapper .styled-link + .styled-link {
+    margin-top: 16px;
+}

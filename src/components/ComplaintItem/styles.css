@@ -1,0 +1,61 @@
+#complaint-item {
+    position: relative;
+
+    width: 100%;
+    padding: 16px 24px;
+    padding-bottom: 2px;
+
+    border-radius: 20px;
+
+    color: var(--secondary-color);
+
+    background-color: var(--primary-color-dark);
+    box-shadow: 0 0 0 2px var(--color-cyan);
+}
+
+#complaint-item + #complaint-item {
+    margin-top: 24px;
+}
+
+#complaint-item h1 {
+    margin: 0;
+    font-size: 26px;
+}
+
+#complaint-item p {
+    margin: 8px 0;
+
+    font-size: 14px;
+    text-align: justify;
+}
+
+#complaint-item .urgency {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+
+    right: 24px;
+    top: 16px;
+
+    color: var(--primary-color-dark);
+    font-weight: bolder;
+}
+
+#complaint-item div {
+    margin: 0;
+}
+
+#complaint-item .user-description {
+    margin-top: 8px;
+    opacity: 0.75;
+}
+
+#complaint-item .styled-link {
+    text-decoration: none;
+    color: var(--secondary-color)
+}

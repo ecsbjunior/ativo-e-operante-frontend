@@ -1,0 +1,67 @@
+div#wrapper-input {
+  position: relative;
+  margin: 16px 0;
+  width: 100%;
+
+  background-color: transparent;
+}
+
+div#wrapper-input input {
+  font-size: 18px;
+  color: var(--secondary-color);
+
+  width: 100%;
+  height: 40px;
+  
+  padding-top: 10px;
+  border-bottom: 2px solid var(--secondary-color);
+  
+  background-color: transparent;
+}
+
+div#wrapper-input label {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  color: var(--secondary-color);
+  font-size: 18px;
+
+  transition: all 0.4s ease;
+}
+
+div#wrapper-input label:hover {
+  cursor: text;
+}
+
+div#wrapper-input input:focus ~ label,
+div#wrapper-input input:valid ~ label,
+div#wrapper-input input:disabled ~ label {
+  transform: translateY(-12px);
+  font-size: 14px;
+  color: var(--color-cyan);
+}
+
+div#wrapper-input div {
+  position: absolute;
+  bottom: 0;
+  
+  width: 100%;
+  height: 2px;
+}
+
+div#wrapper-input div::before {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: var(--color-cyan);
+  transform: scaleX(0);
+
+  transition: transform 0.4s ease;
+}
+
+div#wrapper-input input:focus ~ div::before,
+div#wrapper-input input:valid ~ div::before,
+div#wrapper-input input:disabled ~ div::before {
+  transform: scaleX(1);
+}

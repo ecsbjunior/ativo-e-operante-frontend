@@ -1,0 +1,153 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+*, button, input {
+  border: 0;
+  outline: 0;
+
+  font-family: 'Roboto', sans-serif;
+}
+
+:root {
+  --primary-color: #191622;
+  --primary-color-dark: #13111b;
+  --primary-color-light: #201b2d;
+  --secondary-color: #aaaaaa;
+  --color-cyan: #47c2e1;
+  --color-green: #67e474;
+  --color-pink: #f179c6;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: var(--primary-color);
+
+  z-index: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: var(--secondary-color);
+
+  max-width: 756px;
+  width: 100%;
+  
+  margin: 0 32px;
+  padding: 32px;
+  border-radius: 20px;
+
+  background-color: var(--primary-color-dark);
+  box-shadow: 0 0 0 2px var(--color-cyan);
+}
+
+h1 {
+  margin-bottom: 16px;
+}
+
+form {
+  width: 100%;
+}
+
+form h1 {
+  margin-bottom: 32px;
+}
+
+button {
+  width: 100%;
+
+  font-size: 16px;
+  font-weight: bolder;
+  color: var(--secondary-color);
+
+  padding: 12px 0;
+  margin-top: 8px;
+
+  border-radius: 10px;
+
+  background-color: var(--primary-color-dark);
+  box-shadow: 0 0 0 2px var(--color-cyan);
+
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.table-container {
+  width: 100%;
+  height: calc(5*40px + 2px);
+
+  overflow-y: scroll;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 2px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: var(--color-cyan);
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container table thead td {
+  font-weight: bolder;
+}
+
+.table-container table td {
+  padding: 8px;
+  height: 40px;
+  border: 2px solid var(--color-cyan);
+}
+
+.table-container table td:nth-child(1) {
+  text-align: center;   
+  font-weight: bolder;
+  
+  width: 96px;
+}
+
+.table-container table td:nth-child(3),
+.table-container table td:nth-child(4) {
+  width: 64px;
+  text-align: center;
+}
+
+.table-container table tbody td:nth-child(3):hover,
+.table-container table tbody td:nth-child(4):hover {
+  cursor: pointer;
+}
+
+.priority-1 {
+  background-color: var(--color-cyan);
+}
+.priority-2 {
+  background-color: var(--color-green);
+}
+.priority-3 {
+  background-color: #ffff30;
+}
+.priority-4 {
+  background-color: #ff9930;
+}
+.priority-5 {
+  background-color: #ff2020;
+}

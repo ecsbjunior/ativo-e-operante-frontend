@@ -1,0 +1,24 @@
+.link-styled {
+    width: 100%;
+
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    color: var(--secondary-color);
+
+    border-radius: 20px;
+    padding: 16px;
+
+    background-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--color-cyan);
+
+    transition: background-color 0.3s ease;
+}
+
+.link-styled + .link-styled {
+    margin-top: 24px;
+}
+
+.link-styled:hover {
+    background-color: var(--primary-color-light);
+}
