@@ -7,6 +7,7 @@ import Input from '../../components/Input';
 import api from '../../services/api';
 
 import '../../styles/pages/complaints.css';
+import { useAuth } from '../../contexts/Auth';
 
 interface ComplaintsData {
     id: number;
@@ -22,12 +23,14 @@ const Complaints: React.FC = () => {
     const [complaints, setComplaints] = useState<ComplaintsData[]>([]);
     const [filteredComplaints, setFilteredComplaints] = useState<ComplaintsData[]>([]);
 
+    const { apikey } = useAuth();
+
     useEffect(() => {
-        api.get('/complaints').then(response => {
+        api.get('/complaints', { params: { apikey } }).then(response => {
             setComplaints(response.data);
             setFilteredComplaints(response.data);
         });
-    }, []);
+    }, [apikey]);
 
     function filterComplaints(filter: string) {
         setFilteredComplaints(complaints.filter((item: ComplaintsData) => item.title.includes(filter)));

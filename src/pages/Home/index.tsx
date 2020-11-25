@@ -24,6 +24,7 @@ const Home: React.FC = () => {
                 <Link to="/competent-organs" className="link-styled">Gerencias Orgãos Competentes</Link>
                 <Separator color="var(--color-cyan)"/>
                 <button type="submit" onClick={handleSignOut}>Sign out</button>
+                <p className="developers">Developers: Daniel Figueirinha, Eddy Augusto, Evandro Junior e Heitor Payão</p>
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import Loading from '../components/Loading';
 interface AuthContextData {
   signed: boolean;
   username: string;
+  apikey: string;
   signIn(username: string, password: string): Promise<boolean>;
   signOut(): void;
 };
@@ -14,6 +15,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [username, setUsername] = useState('');
+  const [apikey, setApikey] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,6 +26,7 @@ export const AuthProvider: React.FC = ({ children }) => {
       await new Promise((resolve) => {setTimeout(resolve, 1000)});
 
       if(storageToken && storageUsername) {
+        setApikey(storageToken);
         setUsername(storageUsername);
       }
 
@@ -55,7 +58,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{signed: username !== '', username, signIn, signOut}}>
+    <AuthContext.Provider value={{signed: username !== '', apikey, username, signIn, signOut}}>
       {children}
     </AuthContext.Provider>
   );

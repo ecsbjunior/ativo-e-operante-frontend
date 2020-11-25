@@ -9,6 +9,7 @@ import Navbar from '../../components/Navbar';
 import Input from '../../components/Input';
 
 import '../../styles/pages/problem-type.css';
+import { useAuth } from '../../contexts/Auth';
 
 interface ProblemTypeData {
     id: number;
@@ -24,15 +25,16 @@ const ProblemType: React.FC = () => {
     const [filter, setFilter] = useState('');
 
     const { addToast } = useToasts();
+    const { apikey } = useAuth();
 
     useEffect(() => {
-        api.get('/problem-types').then(response => {
+        api.get('/problem-types', { params: { apikey } }).then(response => {
             setProblemTypes(response.data.filter((item: ProblemTypeData) => item.name.includes(filter)));
         });
-    }, [filter]);
+    }, [filter, apikey]);
 
     function loadProblemTypes() {
-        api.get('/problem-types').then(response => {
+        api.get('/problem-types', { params: { apikey } }).then(response => {
             setProblemTypes(response.data.filter((item: ProblemTypeData) => item.name.includes(filter)));
         });
     }
@@ -42,12 +44,17 @@ const ProblemType: React.FC = () => {
 
         const method = buttonText === 'Salvar' ? 'post' : 'put';
 
-        api[method]('/problem-types', null, { params: { id, name } }).then(response => {
+        api[method]('/problem-types', null, { params: { id, name, apikey } }).then(response => {
             if(response.data.status) {
                 addToast((buttonText === 'Salvar' ? 'Salvo' : 'Alterado') + ' sucesso!', {
                     appearance: 'success',
                     autoDismiss: true
                 });
+
+                setId(0);
+                setName('');
+                setButtonText('Salvar');
+                loadProblemTypes();
             }
             else {
                 addToast('Falha ' + (buttonText === 'Salvar' ? 'no salvar' : 'na alteração') + "!", {
@@ -56,11 +63,6 @@ const ProblemType: React.FC = () => {
                 });
             }
         });
-
-        setId(0);
-        setName('');
-        setButtonText('Salvar');
-        loadProblemTypes();
     }
 
     function handleChange(problemType: ProblemTypeData) {
@@ -74,12 +76,16 @@ const ProblemType: React.FC = () => {
         const response = window.confirm('Deseja mesmo excluir?');
 
         if(response) {
-            api.delete(`/problem-types`, { params: { id } }).then(response => {
+            api.delete(`/problem-types`, { params: { id, apikey } }).then(response => {
                 if(response.data.status) {
                     addToast('Excluido com sucesso!', {
                         appearance: 'success',
                         autoDismiss: true
                     });
+                    
+                    setId(0);
+                    setName('');
+                    setButtonText('Salvar');
                     loadProblemTypes();
                 }
                 else {
@@ -89,10 +95,6 @@ const ProblemType: React.FC = () => {
                     });
                 }
             });
-
-            setId(0);
-            setName('');
-            setButtonText('Salvar');
         }
     }
 

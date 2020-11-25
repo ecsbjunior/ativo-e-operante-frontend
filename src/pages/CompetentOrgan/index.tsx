@@ -9,6 +9,7 @@ import Navbar from '../../components/Navbar';
 import Separator from '../../components/Separator';
 
 import '../../styles/pages/competent-organs.css';
+import { useAuth } from '../../contexts/Auth';
 
 interface CompetentOrganData {
     id: number;
@@ -24,15 +25,16 @@ const CompetentOrgan: React.FC = () => {
     const [filter, setFilter] = useState('');
 
     const { addToast } = useToasts();
+    const { apikey } = useAuth();
 
     useEffect(() => {
-        api.get('/competent-organs').then(response => {
+        api.get('/competent-organs', { params: { apikey } }).then(response => {
             setCompetentOrgans(response.data.filter((item: CompetentOrganData) => item.name.includes(filter)));
         });
-    }, [filter]);
+    }, [filter, apikey]);
 
     function loadCompetentOrgans() {
-        api.get('/competent-organs').then(response => {
+        api.get('/competent-organs', { params: { apikey } }).then(response => {
             setCompetentOrgans(response.data.filter((item: CompetentOrganData) => item.name.includes(filter)));
         });
     }
@@ -42,12 +44,17 @@ const CompetentOrgan: React.FC = () => {
 
         const method = buttonText === 'Salvar' ? 'post' : 'put';
 
-        api[method]('/competent-organs', null, { params: { id, name } }).then(response => {
+        api[method]('/competent-organs', null, { params: { id, name, apikey } }).then(response => {
             if(response.data.status) {
                 addToast((buttonText === 'Salvar' ? 'Salvo' : 'Alterado') + ' sucesso!', {
                     appearance: 'success',
                     autoDismiss: true
                 });
+
+                setId(0);
+                setName('');
+                setButtonText('Salvar');
+                loadCompetentOrgans();
             }
             else {
                 addToast('Falha ' + (buttonText === 'Salvar' ? 'no salvar' : 'na alteração') + "!", {
@@ -57,10 +64,7 @@ const CompetentOrgan: React.FC = () => {
             }
         });
 
-        setId(0);
-        setName('');
-        setButtonText('Salvar');
-        loadCompetentOrgans();
+        
     }
 
     function handleChange(competentOrgan: CompetentOrganData) {
@@ -74,12 +78,16 @@ const CompetentOrgan: React.FC = () => {
         const response = window.confirm('Deseja mesmo excluir?');
 
         if(response) {
-            api.delete(`/competent-organs`, { params: { id } }).then(response => {
+            api.delete(`/competent-organs`, { params: { id, apikey } }).then(response => {
                 if(response.data.status) {
                     addToast('Excluido com sucesso!', {
                         appearance: 'success',
                         autoDismiss: true
                     });
+
+                    setId(0);
+                    setName('');
+                    setButtonText('Salvar');
                     loadCompetentOrgans();
                 }
                 else {
@@ -89,10 +97,6 @@ const CompetentOrgan: React.FC = () => {
                     });
                 }
             });
-
-            setId(0);
-            setName('');
-            setButtonText('Salvar');
         }
     }
 

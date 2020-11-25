@@ -8,6 +8,7 @@ import Navbar from '../../components/Navbar';
 import Separator from '../../components/Separator';
 
 import '../../styles/pages/complaint.css';
+import { useAuth } from '../../contexts/Auth';
 
 interface ComplaintData {
     title: string;
@@ -39,23 +40,24 @@ const Complaint: React.FC = () => {
     const [message, setMessage] = useState('');
 
     const { addToast } = useToasts();
+    const { apikey } = useAuth();
 
     const params = useParams<ComplaintParams>();
 
     useEffect(() => {
-        api.get(`/complaints/${params.id}`).then(response => {
+        api.get(`/complaints/${params.id}`, { params: { apikey } }).then(response => {
             setComplaint(response.data[0]);
         });
-    }, [params.id]);
+    }, [params.id, apikey]);
 
     useEffect(() => {
-        api.get(`/feedbacks/${params.id}`).then(response => {
+        api.get(`/feedbacks/${params.id}`, { params: { apikey } }).then(response => {
             setFeedbacks(response.data.sort((a: FeedbackData, b: FeedbackData) => a.id - b.id));
         });
-    }, [params.id]);
+    }, [params.id, apikey]);
 
     function loadFeedback() {
-        api.get(`/feedbacks/${params.id}`).then(response => {
+        api.get(`/feedbacks/${params.id}`, { params: { apikey } }).then(response => {
             setFeedbacks(response.data.sort((a: FeedbackData, b: FeedbackData) => a.id - b.id));
         });
     }
@@ -63,7 +65,7 @@ const Complaint: React.FC = () => {
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        api.post('/feedbacks', null, { params: { description: message, complaint_id: params.id } }).then(response => {
+        api.post('/feedbacks', null, { params: { description: message, complaint_id: params.id, apikey } }).then(response => {
             if(response.data.status) {
                 addToast('Feedback enviado com sucesso!', {
                     appearance: 'success',
